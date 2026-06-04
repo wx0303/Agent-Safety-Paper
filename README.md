@@ -31,7 +31,7 @@ A curated collection of research papers, articles, benchmarks, and resources foc
   - Date: Mar 21, 2024
 
 
-- [StruQ: Defending Against Prompt Injection with Structured Queries](https://arxiv.org/abs/2403.14720https://arxiv.org/abs/2402.06363)
+- [StruQ: Defending Against Prompt Injection with Structured Queries](https://arxiv.org/pdf/2402.06363)
   - 🔑 Key: defense
   - 🤖 Agent Type: LLM Applications / RAG Systems / Tool Agents
   - 📖 TLDR: This paper proposes StruQ, a defense against prompt injection that separates trusted instructions from untrusted data using structured queries. Instead of relying only on delimiters or post-hoc detection, StruQ changes the input format so that the model receives the application instruction and external data in separate fields. The model is then instruction-tuned to follow only the instruction field and treat the data field as content, even when the data contains malicious instructions such as “ignore previous instructions.” This makes prompt injection harder because injected commands inside external data are no longer treated as valid instructions.
