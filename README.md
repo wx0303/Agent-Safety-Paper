@@ -8,14 +8,15 @@ This repository focuses on safety issues that arise when large language models a
 
 - [Papers](#papers)
   - [1. Safety Evaluation & Benchmarking](#safety-evaluation--benchmarking)
-  - [2. Defense & Guardrails](#defense--guardrails)
-    - [2.1 Input & Prompt Injection Defense](#input--prompt-injection-defense)
-    - [2.2 Planning & Task Alignment Defense](#planning--task-alignment-defense)
-    - [2.3 Retrieval, Memory & Data Defense](#retrieval-memory--data-defense)
-    - [2.4 Tool Execution Defense](#tool-execution-defense)
-    - [2.5 Output, Monitoring & Audit](#output-monitoring--audit)
-  - [3. Safety Training & Alignment](#safety-training--alignment)
-  - [4. Agent Safety Architecture](#agent-safety-architecture)
+  - [2. Safety Defense](#safety-defense)
+    - [2.1 Guardrails](#guardrails)
+      - [2.1.1 Input Guard Rail](#input-guard-rail)
+      - [2.1.2 Planner Guard Rail](#planner-guard-rail)
+      - [2.1.3 Retrieval / Memory Guard Rail](#retrieval-memory-guard-rail)
+      - [2.1.4 Tool Execution Guard Rail](#tool-execution-guard-rail)
+      - [2.1.5 Output & Audit Guard Rail](#output-audit-guard-rail)
+    - [2.2 Safety Alignment Training](#safety-alignment-training)
+    - [2.3 Trustworthy Agent Architecture](#trustworthy-agent-architecture)
 - [Contributing](#contributing)
 
 ## Papers
@@ -36,13 +37,16 @@ Papers, datasets, benchmarks, and red-teaming methods for measuring agent safety
   - 📖 TLDR: WASP is a benchmark for evaluating web agent security against prompt injection attacks. It creates realistic browser-based hijacking scenarios in an isolated environment, measuring whether agents can complete user tasks while resisting malicious instructions embedded in web content.
   - 📅 Date: Apr 2025 / NeurIPS D&B 2025
 
-<a id="defense--guardrails"></a>
-### 2. Defense & Guardrails
+<a id="safety-defense"></a>
+### 2. Safety Defense
 
 Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardrails are treated here as one important class of defense, alongside monitoring, policy enforcement, sandboxing, verification, and recovery mechanisms.
 
-<a id="input--prompt-injection-defense"></a>
-#### 2.1 Input & Prompt Injection Defense
+<a id="guardrails"></a>
+#### 2.1 Guardrails
+
+<a id="input-guard-rail"></a>
+##### 2.1.1 Input Guard Rail
 
 - [PromptArmor: Simple yet Effective Prompt Injection Defenses](https://arxiv.org/abs/2507.15219)
   - 🔑 Key: defense
@@ -62,8 +66,8 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📖 TLDR: This paper proposes StruQ, a defense against prompt injection that separates trusted instructions from untrusted data using structured queries. Instead of relying only on delimiters or post-hoc detection, StruQ changes the input format so that the model receives the application instruction and external data in separate fields. The model is then instruction-tuned to follow only the instruction field and treat the data field as content, even when the data contains malicious instructions such as "ignore previous instructions." This makes prompt injection harder because injected commands inside external data are no longer treated as valid instructions.
   - 📅 Date: Feb 2024
 
-<a id="planning--task-alignment-defense"></a>
-#### 2.2 Planning & Task Alignment Defense
+<a id="planner-guard-rail"></a>
+##### 2.1.2 Planner Guard Rail
 
 - [The Task Shield: Enforcing Task Alignment to Defend Against Indirect Prompt Injection in LLM Agents](https://arxiv.org/abs/2412.16682)
   - 🔑 Key: defense
@@ -77,22 +81,22 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📖 TLDR: This paper proposes MELON, a training-free defense against indirect prompt injection attacks in LLM agents. The key observation is that when an attack succeeds, the agent's next action becomes less dependent on the original user task and more dependent on malicious instructions hidden in tool-retrieved content. MELON detects this by re-executing the agent with the user task masked, then comparing tool calls from the original run and the masked run. If the tool calls are similar, the agent is likely being driven by injected malicious content.
   - 📅 Date: Feb 2025 / ICML 2025
 
-<a id="retrieval-memory--data-defense"></a>
-#### 2.3 Retrieval, Memory & Data Defense
+<a id="retrieval-memory-guard-rail"></a>
+##### 2.1.3 Retrieval / Memory Guard Rail
 
-<a id="tool-execution-defense"></a>
-#### 2.4 Tool Execution Defense
+<a id="tool-execution-guard-rail"></a>
+##### 2.1.4 Tool Execution Guard Rail
 
-<a id="output-monitoring--audit"></a>
-#### 2.5 Output, Monitoring & Audit
+<a id="output-audit-guard-rail"></a>
+##### 2.1.5 Output & Audit Guard Rail
 
-<a id="safety-training--alignment"></a>
-### 3. Safety Training & Alignment
+<a id="safety-alignment-training"></a>
+#### 2.2 Safety Alignment Training
 
 Papers on making the underlying model or agent policy safer through supervised fine-tuning, RLHF/RLAIF, constitutional methods, refusal training, harmlessness training, tool-use training, adversarial training, and robustness training.
 
-<a id="agent-safety-architecture"></a>
-### 4. Agent Safety Architecture
+<a id="trustworthy-agent-architecture"></a>
+#### 2.3 Trustworthy Agent Architecture
 
 System-level designs for safer agents, including permission systems, least-privilege tool access, sandboxing, human approval workflows, multi-agent oversight, memory isolation, secure RAG pipelines, runtime monitors, policy engines, and incident recovery.
 
