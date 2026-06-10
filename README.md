@@ -94,17 +94,18 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
 
 <a id="retrieval-memory-guard-rail"></a>
 ##### 2.1.3 Retrieval / Memory Guard Rail
+ - [TrustRAG: Enhancing Robustness and Trustworthiness in RAG](https://arxiv.org/abs/2501.00879)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: RAG Systems / LLM Applications
+  - 📖 TLDR: TrustRAG is a plug-and-play, training-free defense framework for RAG systems under corpus poisoning attacks. It uses clustering-based filtering and LLM self-assessment to remove compromised or irrelevant retrieved content before generation, improving robustness and trustworthiness.
+  - 📅 Date: Jan 2025
+
 - [RobustRAG: Benchmarking Robustness of Retrieval Augmented Generation in the Presence of Corruptions](https://openreview.net/forum?id=qsEeACAJjD)
   - 🔑 Key: defense
   - 🤖 Agent Type: RAG Systems / LLM Applications
   - 📖 TLDR: RobustRAG proposes an isolate-then-aggregate defense for RAG systems under retrieval corruption. It processes retrieved documents separately and aggregates their answers, reducing the influence of poisoned or corrupted retrieved content on the final response.
   - 📅 Date: 2024
 
-  - [TrustRAG: Enhancing Robustness and Trustworthiness in RAG](https://arxiv.org/abs/2501.00879)
-  - 🔑 Key: defense
-  - 🤖 Agent Type: RAG Systems / LLM Applications
-  - 📖 TLDR: TrustRAG is a plug-and-play, training-free defense framework for RAG systems under corpus poisoning attacks. It uses clustering-based filtering and LLM self-assessment to remove compromised or irrelevant retrieved content before generation, improving robustness and trustworthiness.
-  - 📅 Date: Jan 2025
 <a id="tool-execution-guard-rail"></a>
 ##### 2.1.4 Tool Execution Guard Rail
 
