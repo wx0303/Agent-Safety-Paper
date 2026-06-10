@@ -108,6 +108,35 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
 
 <a id="tool-execution-guard-rail"></a>
 ##### 2.1.4 Tool Execution Guard Rail
+- [Progent: Programmable Privilege Control for LLM Agents](https://arxiv.org/abs/2504.11703)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: Progent proposes a programmable privilege control framework for LLM agents. It lets developers define policies over tools, resources, contexts, and arguments, then enforces these policies before tool execution to prevent unsafe or over-privileged agent actions.
+  - 📅 Date: Apr 2025
+
+- [RTBAS: Defending LLM Agents Against Prompt Injection and Privacy Leakage](https://arxiv.org/abs/2502.08966)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: RTBAS is a runtime defense framework for tool-using LLM agents. It checks whether planned tool actions preserve integrity and confidentiality, blocking or asking for user confirmation when prompt injection or privacy leakage risks cannot be ruled out.
+  - 📅 Date: Feb 2025
+
+- [AgentArmor: Enforcing Program Analysis on Agent Runtime Trace to Defend Against Prompt Injection](https://arxiv.org/abs/2508.01249)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: AgentArmor applies program analysis to agent runtime traces. It converts agent trajectories into program-like dependency structures and checks them against security policies to detect prompt-injection-driven abnormal tool calls, unsafe data flows, and privilege boundary violations.
+  - 📅 Date: Aug 2025
+
+- [Prompt Flow Integrity to Prevent Privilege Escalation in LLM Agents](https://arxiv.org/abs/2503.15547)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: Prompt Flow Integrity protects LLM agents from privilege escalation by tracking how trusted and untrusted prompts or tool outputs influence later tool calls. It prevents untrusted content from controlling high-privilege actions or crossing privilege boundaries.
+  - 📅 Date: Mar 2025
+
+- [Permissive Information Flow Control for Large Language Model Agents](https://arxiv.org/abs/2503.07507)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: Permissive IFC applies information flow control to LLM agents. It tracks how untrusted data propagates through prompts, tool outputs, parameters, and actions, providing a principled way to constrain unsafe information flows while preserving useful agent behavior.
+  - 📅 Date: Mar 2025
 
 <a id="output-audit-guard-rail"></a>
 ##### 2.1.5 Output & Audit Guard Rail
