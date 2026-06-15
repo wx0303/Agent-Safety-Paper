@@ -133,11 +133,6 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📅 Date: Jul 2025 / ACL 2025
 
 
-- [Permissive Information Flow Control for Large Language Model Agents](https://arxiv.org/pdf/2410.03055)
-  - 🔑 Key: defense
-  - 🤖 Agent Type: Tool Agents / LLM Agents
-  - 📖 TLDR: Permissive IFC applies information flow control to LLM agents. It tracks how untrusted data propagates through prompts, tool outputs, parameters, and actions, providing a principled way to constrain unsafe information flows while preserving useful agent behavior.
-  - 📅 Date: Mar 2025
 
 <a id="safety-alignment-training"></a>
 #### 2.2 Safety Alignment Training
@@ -176,6 +171,13 @@ System-level designs for safer agents, including permission systems, least-privi
   - 🤖 Agent Type: Tool Agents / LLM Agents
   - 📖 TLDR: Prompt Flow Integrity protects LLM agents from privilege escalation by tracking how trusted and untrusted prompts or tool outputs influence later tool calls. It prevents untrusted content from controlling high-privilege actions or crossing privilege boundaries.
   - 📅 Date: Mar 2025
+
+- [Permissive Information Flow Control for Large Language Model Agents](https://arxiv.org/pdf/2410.03055)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: Permissive IFC applies information flow control to LLM agents. It tracks how untrusted data propagates through prompts, tool outputs, parameters, and actions, providing a principled way to constrain unsafe information flows while preserving useful agent behavior.
+  - 📅 Date: Mar 2025
+
 ## Contributing
 
 Pull requests are welcome. Please add papers using the following format:
