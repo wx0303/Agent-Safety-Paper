@@ -122,11 +122,6 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📖 TLDR: AgentArmor applies program analysis to agent runtime traces. It converts agent trajectories into program-like dependency structures and checks them against security policies to detect prompt-injection-driven abnormal tool calls, unsafe data flows, and privilege boundary violations.
   - 📅 Date: Aug 2025
 
-- [Prompt Flow Integrity to Prevent Privilege Escalation in LLM Agents](https://arxiv.org/abs/2503.15547)
-  - 🔑 Key: defense
-  - 🤖 Agent Type: Tool Agents / LLM Agents
-  - 📖 TLDR: Prompt Flow Integrity protects LLM agents from privilege escalation by tracking how trusted and untrusted prompts or tool outputs influence later tool calls. It prevents untrusted content from controlling high-privilege actions or crossing privilege boundaries.
-  - 📅 Date: Mar 2025
 
 
 <a id="output-audit-guard-rail"></a>
@@ -175,6 +170,12 @@ System-level designs for safer agents, including permission systems, least-privi
   - 🤖 Agent Type: LLM Applications / RAG Systems / Tool Agents
   - 📖 TLDR: This paper proposes StruQ, a defense against prompt injection that separates trusted instructions from untrusted data using structured queries. Instead of relying only on delimiters or post-hoc detection, StruQ changes the input format so that the model receives the application instruction and external data in separate fields. The model is then instruction-tuned to follow only the instruction field and treat the data field as content, even when the data contains malicious instructions such as "ignore previous instructions." This makes prompt injection harder because injected commands inside external data are no longer treated as valid instructions.
   - 📅 Date: Feb 2024
+
+- [Prompt Flow Integrity to Prevent Privilege Escalation in LLM Agents](https://arxiv.org/abs/2503.15547)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: Prompt Flow Integrity protects LLM agents from privilege escalation by tracking how trusted and untrusted prompts or tool outputs influence later tool calls. It prevents untrusted content from controlling high-privilege actions or crossing privilege boundaries.
+  - 📅 Date: Mar 2025
 ## Contributing
 
 Pull requests are welcome. Please add papers using the following format:
