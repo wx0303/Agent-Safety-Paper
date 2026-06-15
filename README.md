@@ -10,11 +10,11 @@ This repository focuses on safety issues that arise when large language models a
   - [1. Safety Evaluation & Benchmarking](#safety-evaluation--benchmarking)
   - [2. Safety Defense](#safety-defense)
     - [2.1 Guardrails](#guardrails)
-      - [2.1.1 Input Guard Rail](#input-guard-rail)
-      - [2.1.2 Planner Guard Rail](#planner-guard-rail)
-      - [2.1.3 Retrieval / Memory Guard Rail](#retrieval-memory-guard-rail)
-      - [2.1.4 Tool Execution Guard Rail](#tool-execution-guard-rail)
-      - [2.1.5 Output & Audit Guard Rail](#output-audit-guard-rail)
+      - [2.1.1 Input Guardrail](#input-guard-rail)
+      - [2.1.2 Planner Guardrail](#planner-guard-rail)
+      - [2.1.3 Retrieval / Memory Guardrail](#retrieval-memory-guard-rail)
+      - [2.1.4 Tool Execution Guardrail](#tool-execution-guard-rail)
+      - [2.1.5 Output & Audit Guardrail](#output-audit-guard-rail)
     - [2.2 Safety Alignment Training](#safety-alignment-training)
     - [2.3 Trustworthy Agent Architecture](#trustworthy-agent-architecture)
 - [Contributing](#contributing)
@@ -57,7 +57,7 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
 #### 2.1 Guardrails
 
 <a id="input-guard-rail"></a>
-##### 2.1.1 Input Guard Rail
+##### 2.1.1 Input Guardrail
 
 - [PromptArmor: Simple yet Effective Prompt Injection Defenses](https://arxiv.org/abs/2507.15219)
   - 🔑 Key: defense
@@ -74,7 +74,7 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
 
 
 <a id="planner-guard-rail"></a>
-##### 2.1.2 Planner Guard Rail
+##### 2.1.2 Planner Guardrail
 
 - [The Task Shield: Enforcing Task Alignment to Defend Against Indirect Prompt Injection in LLM Agents](https://arxiv.org/abs/2412.16682)
   - 🔑 Key: defense
@@ -89,7 +89,7 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📅 Date: Feb 2025 / ICML 2025
 
 <a id="retrieval-memory-guard-rail"></a>
-##### 2.1.3 Retrieval / Memory Guard Rail
+##### 2.1.3 Retrieval / Memory Guardrail
 - [TrustRAG: Enhancing Robustness and Trustworthiness in RAG](https://arxiv.org/abs/2501.00879)
   - 🔑 Key: defense
   - 🤖 Agent Type: RAG Systems / LLM Applications
@@ -103,7 +103,7 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📅 Date: 2024
 
 <a id="tool-execution-guard-rail"></a>
-##### 2.1.4 Tool Execution Guard Rail
+##### 2.1.4 Tool Execution Guardrail
 - [Progent: Programmable Privilege Control for LLM Agents](https://arxiv.org/abs/2504.11703)
   - 🔑 Key: defense
   - 🤖 Agent Type: Tool Agents / LLM Agents
@@ -128,20 +128,21 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
   - 📖 TLDR: Prompt Flow Integrity protects LLM agents from privilege escalation by tracking how trusted and untrusted prompts or tool outputs influence later tool calls. It prevents untrusted content from controlling high-privilege actions or crossing privilege boundaries.
   - 📅 Date: Mar 2025
 
-- [Permissive Information Flow Control for Large Language Model Agents](https://arxiv.org/abs/2503.07507)
-  - 🔑 Key: defense
-  - 🤖 Agent Type: Tool Agents / LLM Agents
-  - 📖 TLDR: Permissive IFC applies information flow control to LLM agents. It tracks how untrusted data propagates through prompts, tool outputs, parameters, and actions, providing a principled way to constrain unsafe information flows while preserving useful agent behavior.
-  - 📅 Date: Mar 2025
 
 <a id="output-audit-guard-rail"></a>
-##### 2.1.5 Output & Audit Guard Rail
+##### 2.1.5 Output & Audit Guardrail
 - [AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](https://aclanthology.org/2025.acl-long.399/)
   - 🔑 Key: defense / architecture
   - 🤖 Agent Type: LLM Agents / Tool Agents
   - 📖 TLDR: AGrail proposes a lifelong guardrail framework for LLM agents that adaptively generates, executes, and transfers safety checks across tasks. It monitors agent actions at runtime, blocks unsafe behavior, and updates its safety memory to handle evolving risks.
   - 📅 Date: Jul 2025 / ACL 2025
 
+
+- [Permissive Information Flow Control for Large Language Model Agents](https://arxiv.org/pdf/2410.03055)
+  - 🔑 Key: defense
+  - 🤖 Agent Type: Tool Agents / LLM Agents
+  - 📖 TLDR: Permissive IFC applies information flow control to LLM agents. It tracks how untrusted data propagates through prompts, tool outputs, parameters, and actions, providing a principled way to constrain unsafe information flows while preserving useful agent behavior.
+  - 📅 Date: Mar 2025
 
 <a id="safety-alignment-training"></a>
 #### 2.2 Safety Alignment Training
