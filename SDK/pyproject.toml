@@ -1,0 +1,25 @@
+[project]
+name = "agentsec-sdk"
+version = "0.1.0"
+description = "Thin PEP client for the AgentSec guardrail server (HTTP/gRPC/local)."
+requires-python = ">=3.10"
+# Zero runtime dependencies: the wire types are vendored (agentsec_sdk.wire) and
+# the HTTP transport uses only the stdlib (urllib). gRPC is an optional extra.
+dependencies = []
+
+[project.optional-dependencies]
+# Runtime gRPC transport. Floors match the committed _proto stubs: the grpc stub
+# refuses grpcio < 1.81, and the pb2 stub's ValidateProtobufRuntimeVersion needs
+# protobuf >= 6.33.5. grpcio-tools (protoc) is NOT a runtime dep — see [codegen].
+grpc = ["grpcio>=1.81", "protobuf>=6.33.5"]
+# Only needed to regenerate the _proto stubs from proto/agentsec.proto.
+codegen = ["grpcio-tools>=1.81"]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agentsec_sdk*"]

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package agentsec.v1;
+
+// Guardrail decision service (PDP). The event/decision payloads are carried as
+// JSON strings so the gRPC surface reuses the exact same wire contract as the
+// HTTP transport (AgentEvent.to_dict() / Decision.to_dict()) — one source of
+// truth, no parallel schema to maintain.
+service Guardrail {
+  rpc Evaluate (EvaluateRequest) returns (EvaluateResponse);
+  rpc Health (HealthRequest) returns (HealthResponse);
+}
+
+message EvaluateRequest {
+  int32 schema_version = 1;
+  string event_json = 2;     // AgentEvent.to_dict() encoded as JSON
+}
+
+message EvaluateResponse {
+  int32 schema_version = 1;
+  string decision_json = 2;  // Decision.to_dict() encoded as JSON
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+  int32 schema_version = 2;
+}
