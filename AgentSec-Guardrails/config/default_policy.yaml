@@ -1,0 +1,42 @@
+policies:
+  - name: prompt_injection
+    type: PromptInjectionPolicy
+    rails: [input, retrieval, model]
+
+  - name: task_alignment
+    type: TaskAlignmentPolicy
+    rails: [planner, execution]
+
+  - name: retrieval_trust
+    type: RetrievalTrustPolicy
+    rails: [retrieval]
+    trust_threshold: 0.4
+
+  - name: memory_write
+    type: MemoryWritePolicy
+    rails: [memory]
+    allowed_scopes: [session, user_preferences, project_notes]
+    block_long_term_from_untrusted: true
+
+  - name: tool_permission
+    type: ToolPermissionPolicy
+    rails: [execution]
+    allowed_tools: [calculator, search, read_file]
+    high_risk_tools: [send_email, delete_file, write_file, transfer_money, shell_exec]
+    require_human_for_high_risk: true
+
+  - name: tool_result_inspection
+    type: ToolResultInspectionPolicy
+    rails: [execution]
+
+  - name: output_safety
+    type: OutputSafetyPolicy
+    rails: [output]
+
+  - name: audit_logging
+    type: AuditLoggingPolicy
+    rails: [input, planner, retrieval, memory, execution, output, audit]
+    log_path: logs/agent_guardrail.jsonl
+
+# TODO: wire this declarative policy file into a lightweight loader once the
+# prototype needs runtime configuration rather than explicit Python setup.

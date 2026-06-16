@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent Guardrail Console</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <script src="./runtime-config.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <strong>Agent Guardrail</strong>
+            <small>Safety Gateway</small>
+          </div>
+        </div>
+        <nav>
+          <a class="active" href="#home">Home</a>
+          <a href="#agentdojo">AgentDojo</a>
+          <a href="#strategy">Strategy</a>
+          <a href="#presentation">Demo</a>
+          <a href="#rails">Rails</a>
+          <a href="#trace">Live Trace</a>
+          <a href="#integrations">Integrations</a>
+          <a href="#policies">Policies</a>
+        </nav>
+        <div class="sidebar-footer">
+          <span class="status-dot"></span>
+          <span>Gateway healthy</span>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="page home-page active" id="home" data-page="home" aria-label="API entry hub">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">AgentSec API gateway</p>
+              <h1>Choose an interface or open a guardrail workspace</h1>
+            </div>
+            <div class="topbar-actions">
+              <button class="ghost-button" type="button" id="copySdk">Copy SDK</button>
+              <button class="primary-button" type="button" id="runScenario">Open Demo</button>
+            </div>
+          </header>
+
+          <div class="home-command-panel">
+            <div class="panel-header compact">
+              <div>
+                <p class="eyebrow">Interfaces</p>
+                <h2>API actions and workspace entry points</h2>
+              </div>
+              <span class="pill">Backend 127.0.0.1:8002</span>
+            </div>
+
+            <div class="api-entry-grid" aria-label="API actions">
+              <button class="api-entry" type="button" data-api-call="health">
+                <span>GET</span>
+                <strong>/health</strong>
+                <small>Check backend service status</small>
+              </button>
+              <button class="api-entry" type="button" data-api-call="demoCases">
+                <span>GET</span>
+                <strong>/api/demo/cases</strong>
+                <small>List guarded runtime demo cases</small>
+              </button>
+              <button class="api-entry" type="button" data-api-call="agentdojoRun">
+                <span>POST</span>
+                <strong>/api/agentdojo/run</strong>
+                <small>Run AgentDojo smoke benchmark</small>
+              </button>
+              <button class="api-entry workspace-entry" type="button" data-nav-to="agentdojo">
+                <span>OPEN</span>
+                <strong>AgentDojo Benchmark</strong>
+                <small>View case trace and risk distribution</small>
+              </button>
+              <button class="api-entry workspace-entry" type="button" data-nav-to="strategy">
+                <span>OPEN</span>
+                <strong>Risk Strategy</strong>
+                <small>Review filter / human / block tiers</small>
+              </button>
+              <button class="api-entry workspace-entry" type="button" data-nav-to="integrations">
+                <span>OPEN</span>
+                <strong>Developer Integrations</strong>
+                <small>Copy adapter snippets</small>
+              </button>
+            </div>
+
+            <div class="home-api-output">
+              <div>
+                <strong>Response preview</strong>
+                <span id="homeApiStatus">Ready</span>
+              </div>
+              <pre id="homeApiOutput">Select an interface button to call the backend API.</pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="page panel benchmark-panel" id="agentdojo" data-page="agentdojo" aria-label="AgentDojo benchmark">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">AgentDojo benchmark</p>
+              <h2>Use realistic tool-agent attacks as the platform validation set</h2>
+            </div>
+            <div class="panel-actions">
+              <button class="ghost-button" type="button" id="exportAgentDojo">Export JSON</button>
+              <button class="primary-button" type="button" id="runAgentDojo">Run Benchmark</button>
+            </div>
+          </div>
+
+          <div class="command-strip" aria-label="AgentDojo run command">
+            <span>command</span>
+            <code>python examples/agentdojo_guardrail_eval.py --strict</code>
+          </div>
+
+          <div class="benchmark-summary" aria-label="AgentDojo summary">
+            <article>
+              <span>Total cases</span>
+              <strong id="dojoTotal">6</strong>
+              <small>workspace, banking, travel, slack</small>
+            </article>
+            <article>
+              <span>Filtered</span>
+              <strong id="dojoFilterCount">2</strong>
+              <small>medium-risk content sanitized</small>
+            </article>
+            <article>
+              <span>Human review</span>
+              <strong id="dojoHumanCount">2</strong>
+              <small>high-risk intent paused</small>
+            </article>
+            <article>
+              <span>Blocked</span>
+              <strong id="dojoBlockCount">2</strong>
+              <small>critical execution/output stopped</small>
+            </article>
+          </div>
+
+          <div class="response-distribution" aria-label="Risk response distribution">
+            <div>
+              <span>filter</span>
+              <div class="bar-track"><span class="bar filter-bar" id="dojoFilterBar"></span></div>
+              <strong id="dojoFilterShare">33%</strong>
+            </div>
+            <div>
+              <span>require human</span>
+              <div class="bar-track"><span class="bar human-bar" id="dojoHumanBar"></span></div>
+              <strong id="dojoHumanShare">33%</strong>
+            </div>
+            <div>
+              <span>block</span>
+              <div class="bar-track"><span class="bar block-bar" id="dojoBlockBar"></span></div>
+              <strong id="dojoBlockShare">33%</strong>
+            </div>
+          </div>
+
+          <div class="benchmark-workbench">
+            <div class="dojo-case-table" id="dojoCaseList" aria-label="AgentDojo cases"></div>
+
+            <div class="dojo-detail">
+              <div class="dojo-detail-head">
+                <div>
+                  <p class="eyebrow" id="dojoSuite">workspace</p>
+                  <h3 id="dojoTitle">Workspace retrieval injection filter</h3>
+                </div>
+                <span class="decision filter" id="dojoDecision">filter</span>
+              </div>
+              <p class="demo-description" id="dojoDescription"></p>
+
+              <div class="dojo-meta">
+                <span id="dojoUserTask">user: UserTask0</span>
+                <span id="dojoInjectionTask">injection: InjectionTask0</span>
+                <span id="dojoStoppedAt">stopped: -</span>
+              </div>
+
+              <div class="dojo-trace" id="dojoTrace" aria-label="AgentDojo guardrail trace"></div>
+
+              <div class="dojo-output-grid">
+                <div>
+                  <strong>User task</strong>
+                  <pre class="inline-pre" id="dojoUserInput"></pre>
+                </div>
+                <div>
+                  <strong>Platform result</strong>
+                  <pre class="inline-pre" id="dojoOutput"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="benchmark-status" id="dojoRunStatus">
+            AgentDojo smoke benchmark loaded. Run the benchmark to refresh decisions from the backend.
+          </div>
+        </section>
+
+        <section class="page workspace strategy-workspace" id="strategy" data-page="strategy">
+          <div class="panel strategy-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Risk response strategy</p>
+                <h2>Tiered action model replacing single-path blocking</h2>
+              </div>
+              <span class="pill">filter / review / block</span>
+            </div>
+            <div class="strategy-matrix" aria-label="Risk response matrix">
+              <article>
+                <span class="risk-dot low"></span>
+                <strong>Low</strong>
+                <p>Allow normal agent runtime flow with audit logging.</p>
+                <span class="decision allow">allow</span>
+              </article>
+              <article>
+                <span class="risk-dot medium"></span>
+                <strong>Medium</strong>
+                <p>Sanitize retrieved content, tool results, memory, or final answer.</p>
+                <span class="decision filter">filter</span>
+              </article>
+              <article>
+                <span class="risk-dot high"></span>
+                <strong>High</strong>
+                <p>Pause sensitive but potentially legitimate intent for approval.</p>
+                <span class="decision require_human">require_human</span>
+              </article>
+              <article>
+                <span class="risk-dot critical"></span>
+                <strong>Critical</strong>
+                <p>Stop dangerous tool execution or hidden prompt leakage immediately.</p>
+                <span class="decision block">block</span>
+              </article>
+            </div>
+          </div>
+
+          <div class="panel review-queue">
+            <div class="panel-header compact">
+              <div>
+                <p class="eyebrow">Human review queue</p>
+                <h2>High-risk AgentDojo decisions</h2>
+              </div>
+            </div>
+            <div id="reviewQueueList" class="review-list" aria-label="Human review queue"></div>
+          </div>
+        </section>
+
+        <section class="page panel presentation-demo" id="presentation" data-page="presentation" aria-label="Presentation demo">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Agent loop demo</p>
+              <h2>LLM plans, runtime acts, policies guard every boundary</h2>
+            </div>
+            <span class="pill">6 agent loops</span>
+          </div>
+
+          <div class="rail-flow" aria-label="AgentSec rail replacement flow">
+            <div>
+              <strong>Input Guard</strong>
+              <span>User instruction before first LLM call</span>
+            </div>
+            <div>
+              <strong>Planner Guard</strong>
+              <span>LLM-generated plan before runtime execution</span>
+            </div>
+            <div>
+              <strong>Retrieval / Memory</strong>
+              <span>Retrieved context and memory writes before persistence</span>
+            </div>
+            <div>
+              <strong>Tool Execution</strong>
+              <span>Tool call before execution and result before model context</span>
+            </div>
+            <div>
+              <strong>Output & Audit</strong>
+              <span>Secret filtering, prompt leakage, JSONL trace</span>
+            </div>
+          </div>
+
+          <div class="demo-shell">
+            <aside class="demo-case-list" id="demoCaseList" aria-label="Demo scenarios"></aside>
+
+            <div class="demo-inspector">
+              <div class="demo-inspector-head">
+                <div>
+                  <p class="eyebrow" id="demoGroup">Normal workflow</p>
+                  <h3 id="demoTitle">Safe request passes through all rails</h3>
+                </div>
+                <span class="decision allow" id="demoDecisionBadge">allow</span>
+              </div>
+
+              <p class="demo-description" id="demoDescription"></p>
+
+              <div class="demo-facts" aria-label="Current demo facts">
+                <span id="demoRail">rail: input</span>
+                <span id="demoRisk">risk: low</span>
+                <span id="demoRuntime">runtime: continue</span>
+              </div>
+
+              <div class="demo-runbar">
+                <button class="primary-button" type="button" id="demoRunButton">Run Guardrail</button>
+                <span id="demoRunStatus">Ready. Select a case, then run the guardrail.</span>
+              </div>
+
+              <div class="demo-stage">
+                <div class="stage-heading">
+                  <span>1</span>
+                  <h4>Input / Output</h4>
+                </div>
+                <div class="io-layout">
+                  <div class="io-panel">
+                    <div class="io-title">
+                      <strong>User Instruction</strong>
+                      <span>Input entering the guarded agent loop</span>
+                    </div>
+                    <pre class="demo-pre" id="demoInput"></pre>
+                  </div>
+                  <div class="io-panel output-panel">
+                    <div class="io-title">
+                      <strong>Guarded Output</strong>
+                      <span>Filled after the agent loop completes or stops</span>
+                    </div>
+                    <pre class="demo-pre output-pre" id="demoOutput"></pre>
+                  </div>
+                </div>
+                <pre class="demo-pre metadata compact-metadata" id="demoMetadata"></pre>
+              </div>
+
+              <div class="execution-details is-hidden" id="demoExecution">
+                <div class="demo-stage">
+                  <div class="stage-heading">
+                    <span>2</span>
+                    <h4>Agent Loop Execution</h4>
+                  </div>
+                  <div class="policy-trace-detailed" id="demoPolicyTrace"></div>
+                </div>
+
+                <div class="demo-stage">
+                  <div class="stage-heading">
+                    <span>3</span>
+                    <h4>Final Decision</h4>
+                  </div>
+                  <div class="final-decision">
+                    <div>
+                      <span>Action</span>
+                      <strong id="demoFinalAction">allow</strong>
+                    </div>
+                    <div>
+                      <span>Policy</span>
+                      <strong id="demoFinalPolicy">engine_default</strong>
+                    </div>
+                    <div>
+                      <span>Reason</span>
+                      <p id="demoFinalReason">All matched policies returned allow.</p>
+                    </div>
+                    <div>
+                      <span>Meaning</span>
+                      <p id="demoFinalMeaning">
+                        The event can continue into the next agent runtime step.
+                      </p>
+                    </div>
+                  </div>
+                  <pre class="demo-pre rewrite-output" id="demoRewrite"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page workspace" id="rails" data-page="rails">
+          <div class="panel rail-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Rail protection map</p>
+                <h2>One engine, multiple agent runtimes</h2>
+              </div>
+              <span class="pill">Live policy</span>
+            </div>
+
+            <div class="rail-map">
+              <button class="rail active" type="button" data-rail="input">
+                <span>Input</span>
+                <small>PromptArmor and prompt injection</small>
+              </button>
+              <button class="rail" type="button" data-rail="dialog">
+                <span>Dialog</span>
+                <small>Multi-turn intent drift</small>
+              </button>
+              <button class="rail" type="button" data-rail="planner">
+                <span>Planner</span>
+                <small>Task alignment and MELON traces</small>
+              </button>
+              <button class="rail" type="button" data-rail="retrieval">
+                <span>Retrieval</span>
+                <small>RAG poisoning and untrusted sources</small>
+              </button>
+              <button class="rail" type="button" data-rail="execution">
+                <span>Execution</span>
+                <small>Tool allowlist and least privilege</small>
+              </button>
+              <button class="rail" type="button" data-rail="memory">
+                <span>Memory</span>
+                <small>Workspace and memory writes</small>
+              </button>
+              <button class="rail" type="button" data-rail="output">
+                <span>Output</span>
+                <small>Leak prevention and final response checks</small>
+              </button>
+            </div>
+
+            <div class="rail-detail" id="railDetail">
+              <span class="rail-badge">input rail</span>
+              <h3>Blocks jailbreak instructions before they reach the model</h3>
+              <p>
+                Applies keyword, classifier, and research defense modules before a user message enters
+                the agent runtime. New jailbreak defense methods can be added here without changing
+                LangChain or OpenClaw adapters.
+              </p>
+            </div>
+          </div>
+
+          <div class="panel comparison-panel">
+            <div class="panel-header compact">
+              <div>
+                <p class="eyebrow">Before vs after</p>
+                <h2>Same agent, safer path</h2>
+              </div>
+            </div>
+
+            <div class="comparison">
+              <div class="lane unsafe">
+                <span>Without rails</span>
+                <p>Search result includes <mark>api_key=leaked_key_123456789</mark></p>
+                <p>Shell tool runs immediately</p>
+                <p>Jailbreak prompt reaches the model</p>
+              </div>
+              <div class="lane safe">
+                <span>With rails</span>
+                <p>Secret is filtered as <mark>[REDACTED_SECRET]</mark></p>
+                <p>Shell tool requires human approval</p>
+                <p>Jailbreak prompt pauses for review at input rail</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page panel trace-panel" id="trace" data-page="trace">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Live decision trace</p>
+                <h2>Risk decisions across the agent loop</h2>
+              </div>
+              <div class="segmented" role="group" aria-label="Scenario selector">
+                <button type="button" class="selected" data-scenario="safe">Safe</button>
+                <button type="button" data-scenario="leak">Leak</button>
+                <button type="button" data-scenario="tool">Tool</button>
+                <button type="button" data-scenario="jailbreak">Jailbreak</button>
+              </div>
+            </div>
+            <div class="trace-list" id="traceList" aria-live="polite"></div>
+        </section>
+
+        <section class="page panel integration-panel" id="integrations" data-page="integrations">
+            <div class="panel-header compact">
+              <div>
+                <p class="eyebrow">Developer integration</p>
+                <h2>Drop-in adapters</h2>
+              </div>
+            </div>
+            <div class="adapter-grid">
+              <div class="adapter active">LangChain middleware</div>
+              <div class="adapter">OpenClaw tool wrapper</div>
+              <div class="adapter">Hermes API proxy</div>
+              <div class="adapter">MCP proxy</div>
+            </div>
+            <pre><code id="sdkSnippet">proxy = GuardrailProxy(engine, framework="langchain")
+safe_prompt = proxy.guard_text(prompt, RailType.INPUT)
+result = proxy.guard_tool_call("search", args, search)</code></pre>
+        </section>
+
+        <section class="page panel policy-panel" id="policies" data-page="policies">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Research-ready policy modules</p>
+              <h2>Extend rail capability as new defense methods appear</h2>
+            </div>
+            <span class="pill">8 active modules</span>
+          </div>
+          <div class="policy-table" role="table" aria-label="Policy modules">
+            <div class="table-row header" role="row">
+              <span>Module</span>
+              <span>Rail</span>
+              <span>Decision</span>
+              <span>Status</span>
+            </div>
+            <div class="table-row" role="row">
+              <span>Jailbreak keyword baseline</span>
+              <span>Input, Dialog</span>
+              <span>Block</span>
+              <span class="ok">Enabled</span>
+            </div>
+            <div class="table-row" role="row">
+              <span>PromptArmor sanitizer</span>
+              <span>Input</span>
+              <span>Filter</span>
+              <span class="ok">Enabled</span>
+            </div>
+            <div class="table-row" role="row">
+              <span>Secret filtering</span>
+              <span>Execution, Output</span>
+              <span>Filter</span>
+              <span class="ok">Enabled</span>
+            </div>
+            <div class="table-row" role="row">
+              <span>Tool allowlist</span>
+              <span>Execution</span>
+              <span>Human review</span>
+              <span class="ok">Enabled</span>
+            </div>
+            <div class="table-row" role="row">
+              <span>MELON masked trace detector</span>
+              <span>Planner</span>
+              <span>Human review</span>
+              <span class="ok">Enabled</span>
+            </div>
+            <div class="table-row" role="row">
+              <span>Retrieval trust scorer</span>
+              <span>Retrieval</span>
+              <span>Degrade</span>
+              <span class="ok">Enabled</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="./assets/app.js?v=20260615-promptarmor-ai"></script>
+  </body>
+</html>
